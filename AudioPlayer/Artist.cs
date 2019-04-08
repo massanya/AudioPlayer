@@ -8,5 +8,6 @@ namespace AudioPlayer
 {
     class Artist
     {
+        public string name;
     }
 }
