@@ -12,17 +12,17 @@ namespace AudioPlayer
         public bool IsLock;
 		private bool _playing;
         public Song[] Songs; //связь один со многими
-		private bool Playing  {get; set;}
-		//{
-		//	get
-		//	{
-		//		return _playing;	
-		//	}
-		//	private set 
-		//	{
-		//		_playing = value;
-		//	}
-		//}
+		public bool Playing // {get; set;}
+		{
+			get
+			{
+				return _playing;	
+			}
+			private set 
+			{
+				_playing = value;
+			}
+		}
 
         private const int _maxvolume=100;
         private int _volume;
