@@ -12,11 +12,15 @@ namespace AudioPlayer
         public bool IsLock;
 		private bool _playing;
         public Song[] Songs; //связь один со многими
-		//private bool Playing //ничего не работает без сеттера
+		private bool Playing  {get; set;}
 		//{
 		//	get
 		//	{
-		//	_playing;	
+		//		return _playing;	
+		//	}
+		//	private set 
+		//	{
+		//		_playing = value;
 		//	}
 		//}
 
@@ -85,19 +89,19 @@ namespace AudioPlayer
         {
             if (IsLock==false)
 			{
-				_playing=false;
+				Playing=false;
 				Console.WriteLine($"Player is stop");
 			}
-			return _playing;
+			return Playing;
         }
 		public bool Start()
         {
             if (IsLock==false)
 			{
-				_playing=true;
+				Playing=true;
 				Console.WriteLine($"Player is start");
 			}
-			return _playing;
+			return Playing;
         }
     }
 }

@@ -66,7 +66,7 @@ namespace AudioPlayer
 
 
             }
-
+			//player.Playing=true;
             Console.ReadLine();
         }
     }
