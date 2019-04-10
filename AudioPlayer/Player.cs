@@ -58,5 +58,38 @@ namespace AudioPlayer
             Volume -= 5;
             Console.WriteLine($"volume={Volume}");
         }
+        public void VolumeChange(int step)
+        {
+            Volume += step;
+            Console.WriteLine($"volume={Volume}");
+        }
+		public bool Lock()
+        {
+            IsLock=true;
+            Console.WriteLine($"Player is lock");
+        }
+		public bool Unlock()
+        {
+            IsLock=false;
+            Console.WriteLine($"Player is unlock");
+        }
+		public bool Stop()
+        {
+            if (IsLock==false)
+			{
+				Playing=false;
+				Console.WriteLine($"Player is stop");
+				return Playing;
+			}
+        }
+		public bool Start()
+        {
+            if (IsLock==false)
+			{
+				Playing=true;
+				Console.WriteLine($"Player is start");
+				return Playing;
+			}
+        }
     }
 }
