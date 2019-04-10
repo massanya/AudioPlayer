@@ -9,9 +9,16 @@ namespace AudioPlayer
     class Player
     {
         
-        public bool isLock;
+        public bool IsLock;
+		private bool _playing;
         public Song[] Songs; //связь один со многими
-
+		public bool Playing
+		{
+			get
+			{
+			return _playing;
+			}
+		}
         private const int _maxvolume=100;
         private int _volume;
         public int Volume

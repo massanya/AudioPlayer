@@ -8,11 +8,11 @@ namespace AudioPlayer
 {
     class Song
     {
-        public int duration;
-        public string title;
-        public string path;
-        public string lyrics;
-        public string genre;
+        public int Duration;
+        public string Title;
+        public string Path;
+        public string Lyrics;
+        public string Genre;
         public Artist Artist;
         public Album Album;
 

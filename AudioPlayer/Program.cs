@@ -13,13 +13,13 @@ namespace AudioPlayer
         static void Main(string[] args)
         {
             var song1 = new Song();
-            song1.title = "Dim";
-            song1.duration = 300;
-            song1.Artist = new Artist { name = "Nensi" };
+            song1.Title = "Dim";
+            song1.Duration = 300;
+            song1.Artist = new Artist { Name = "Nensi" };
             var song2 = new Song();
-            song2.title = "Anaconda";
-            song2.duration = 270;
-            song2.Artist = new Artist { name = "Nicki Minaj" };
+            song2.Title = "Anaconda";
+            song2.Duration = 270;
+            song2.Artist = new Artist { Name = "Nicki Minaj" };
             var player = new Player();
             player.Songs = new[] { song1, song2 };
 
