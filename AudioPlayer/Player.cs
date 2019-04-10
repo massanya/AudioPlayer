@@ -12,13 +12,14 @@ namespace AudioPlayer
         public bool IsLock;
 		private bool _playing;
         public Song[] Songs; //связь один со многими
-		public bool Playing
-		{
-			get
-			{
-			return _playing;
-			}
-		}
+		//private bool Playing //ничего не работает без сеттера
+		//{
+		//	get
+		//	{
+		//	_playing;	
+		//	}
+		//}
+
         private const int _maxvolume=100;
         private int _volume;
         public int Volume
@@ -48,7 +49,7 @@ namespace AudioPlayer
         {
             for (int i = 0; i < Songs.Length; i++)
             {
-                Console.WriteLine(Songs[i].title);
+                Console.WriteLine(Songs[i].Title);
                 System.Threading.Thread.Sleep(2000);
             }
 
@@ -70,12 +71,12 @@ namespace AudioPlayer
             Volume += step;
             Console.WriteLine($"volume={Volume}");
         }
-		public bool Lock()
+		public void Lock()
         {
             IsLock=true;
             Console.WriteLine($"Player is lock");
         }
-		public bool Unlock()
+		public void Unlock()
         {
             IsLock=false;
             Console.WriteLine($"Player is unlock");
@@ -84,19 +85,19 @@ namespace AudioPlayer
         {
             if (IsLock==false)
 			{
-				Playing=false;
+				_playing=false;
 				Console.WriteLine($"Player is stop");
-				return Playing;
 			}
+			return _playing;
         }
 		public bool Start()
         {
             if (IsLock==false)
 			{
-				Playing=true;
+				_playing=true;
 				Console.WriteLine($"Player is start");
-				return Playing;
 			}
+			return _playing;
         }
     }
 }

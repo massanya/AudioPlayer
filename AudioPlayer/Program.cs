@@ -42,6 +42,26 @@ namespace AudioPlayer
                             player.Play();
                         }
                         break;
+					case "l":
+                        {
+                            player.Lock();
+                        }
+                        break;
+					case "ul":
+                        {
+                            player.Unlock();
+                        }
+                        break;
+					case "s":
+                        {
+                            player.Stop();
+                        }
+                        break;
+					case "start":
+                        {
+                            player.Start();
+                        }
+                        break;
                 }
 
 
