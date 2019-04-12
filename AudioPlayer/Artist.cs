@@ -11,5 +11,14 @@ namespace AudioPlayer
         public string Name;
 		public string Nickname;
 		public string Country;
+        public Artist() //свойства
+        {
+            this.Name = "unknown artist";
+        }
+        public Artist(string name)
+        {
+            this.Name = name;
+
+        }
     }
 }
