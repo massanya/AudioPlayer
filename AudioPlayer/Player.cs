@@ -12,6 +12,7 @@ namespace AudioPlayer
         public bool IsLock;
 		private bool _playing;
         public Song[] Songs; //связь один со многими
+		public Song songone;
 		public bool Playing // {get; set;}
 		{
 			get
@@ -51,13 +52,16 @@ namespace AudioPlayer
         }
         public void Play()
         {
-            for (int i = 0; i < Songs.Length; i++)
+			Console.WriteLine(songone.Title+" "+songone.Artist.Name+" "+songone.Duration);
+
+			for (int i = 0; i < Songs.Length; i++)
             {
                 Console.WriteLine(Songs[i].Title+" "+Songs[i].Artist.Name+" "+Songs[i].Duration);
                 System.Threading.Thread.Sleep(Songs[i].Duration);
             }
             
         }
+
        
         public void VolumeUp()
         {
@@ -102,6 +106,14 @@ namespace AudioPlayer
 				Console.WriteLine($"Player is start");
 			}
 			return Playing;
+        }
+		public void Add(params Song[] Songs)
+        {
+            for (int i = 0; i < Songs.Length; i++)
+			{
+				Console.WriteLine(Songs[i].Title+" "+Songs[i].Artist.Name+" "+Songs[i].Duration);
+                System.Threading.Thread.Sleep(Songs[i].Duration);
+			}
         }
     }
 }
