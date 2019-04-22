@@ -16,7 +16,7 @@ namespace AudioPlayer
 		{
 			get
 			{
-				return _playing;	
+			return _playing;	
 			}
 			private set 
 			{
