@@ -15,6 +15,15 @@ namespace AudioPlayer
         public string Genre;
         public Artist Artist;
         public Album Album;
+        
+        public void Like()
+        {
+	        Like = true;
+        }
 
+        public void Dislike()
+        {
+	        Like = false;
+        }
     }
 }

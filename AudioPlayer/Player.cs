@@ -53,7 +53,8 @@ namespace AudioPlayer
         {
             for (int i = 0; i < Songs.Length; i++)
             {
-                Console.WriteLine(Songs[i].Title);
+                if (Songs[i].Like==true)
+	            Console.WriteLine(Songs[i].Title);
                 System.Threading.Thread.Sleep(2000);
             }
 
