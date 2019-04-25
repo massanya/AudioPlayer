@@ -16,12 +16,13 @@ namespace AudioPlayer
         {
             int min, max, total=0;
             var player = new Player();
+            Random rand = new Random();
             //var songs = CreateSongs(out min, out max, ref total);
 			List<Song> songs = new List<Song>();
             for (int i = 0; i < 8; i++)
             {
                 
-                var song = CreateSong("song " + (i + 1));
+                var song = CreateSong($"song {i}" , Convert.ToBoolean(rand.Next(2)));
                 songs.Add(song);
             }
             player.Add(songs);
@@ -122,24 +123,17 @@ namespace AudioPlayer
 			song.Duration = rand.Next(3000);
             return song;
         }
-		static Song CreateSong(string name)
+		static Song CreateSong(string name, bool like)
         {
             Random rand = new Random();
             var song = new Song();
 			song.Artist=new Artist();
 			song.Title=name;
+			song.like=like;
 			song.Duration = rand.Next(3000);
             return song;
         }
-		static Song CreateSong(string name,Artist artist, int durat)
-        {
-            Random rand = new Random();
-            var song = new Song();
-			song.Artist=artist;
-			song.Title=name;
-			song.Duration = durat;
-            return song;
-        }
+		
 		static Artist AddArtist(string Name="Unknown Artist")
 		{
 			var artist=new Artist();

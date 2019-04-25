@@ -58,7 +58,15 @@ namespace AudioPlayer
             repeat = loop == false ? 1 : 5;
             for (int i = 0; i < repeat; i++)
             {
-                Console.WriteLine(songs[i].Title);
+	            if (songs[i].like == true)
+	            {
+		            Console.ForegroundColor = ConsoleColor.Green;
+	            }
+				else if (songs[i].like == false)
+	            {
+		            Console.ForegroundColor = ConsoleColor.Red;
+	            }
+	            Console.WriteLine(songs[i].Title);
                 System.Threading.Thread.Sleep(2000);
             }
         }
