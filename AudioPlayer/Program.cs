@@ -26,6 +26,16 @@ namespace AudioPlayer
                 songs.Add(song);
             }
             player.Add(songs);
+
+            List<Song> songsGenre = new List<Song>();
+            for (int i = 0; i < 8; i++)
+            {
+	            
+	            var songG = CreateSongGenre($"song {i}");
+	            
+	            songsGenre.Add(songG);
+            }
+            player.Add(songsGenre);
 			//player.SortByTitle(songs);
             //player.Shuffle(songs);
 
@@ -133,7 +143,19 @@ namespace AudioPlayer
 			song.Duration = rand.Next(3000);
             return song;
         }
-		
+		static Song CreateSongGenre(string name)
+		{
+			Random rand = new Random();
+			var song = new Song();
+			song.Artist=new Artist();
+			song.Title=name;
+			Song.Genres gen;
+			gen = Song.Genres.Pop;
+			song.Genre=gen;
+			
+			song.Duration = rand.Next(3000);
+			return song;
+		}
 		static Artist AddArtist(string Name="Unknown Artist")
 		{
 			var artist=new Artist();

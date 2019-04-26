@@ -9,14 +9,14 @@ namespace AudioPlayer
     
 	class Song
     {
-	    [Flags]
+	    
 	    public enum Genres
 	    {
 		    None = 0,       //0000
-		    Pop = 1,        //0001
-		    Rock = 2,       //0010
-		    Rap = 4,		//0100
-		    Metall = 8		//1000
+		    Pop,        //0001
+		    Rock,       //0010
+		    Rap ,		//0100
+		    Metall	//1000
 	    }
 	    public int Duration;
         public string Title;
@@ -36,5 +36,7 @@ namespace AudioPlayer
         {
 	        like = false;
         }
+
+        
     }
 }

@@ -58,6 +58,7 @@ namespace AudioPlayer
             repeat = loop == false ? 1 : 5;
             for (int i = 0; i < repeat; i++)
             {
+	            
 	            if (songs[i].like == true)
 	            {
 		            Console.ForegroundColor = ConsoleColor.Green;
@@ -66,7 +67,7 @@ namespace AudioPlayer
 	            {
 		            Console.ForegroundColor = ConsoleColor.Red;
 	            }
-	            Console.WriteLine(songs[i].Title);
+	            Console.WriteLine(songs[i].Title+" Genre-"+songs[i].Genre);
                 System.Threading.Thread.Sleep(2000);
             }
         }
