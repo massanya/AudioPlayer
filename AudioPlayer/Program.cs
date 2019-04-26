@@ -18,6 +18,8 @@ namespace AudioPlayer
             var player = new Player();
             Random rand = new Random();
             //var songs = CreateSongs(out min, out max, ref total);
+			
+			
 			List<Song> songs = new List<Song>();
             for (int i = 0; i < 8; i++)
             {
@@ -31,13 +33,11 @@ namespace AudioPlayer
             for (int i = 0; i < 8; i++)
             {
 	            
-	            var songG = CreateSongGenre($"song {i}");
+	            var songG = CreateSongGenre($"song {i}", rand.Next(4));
 	            
 	            songsGenre.Add(songG);
             }
             player.Add(songsGenre);
-			//player.SortByTitle(songs);
-            //player.Shuffle(songs);
 
 			while (true)
             {
@@ -88,7 +88,11 @@ namespace AudioPlayer
                             player.SortByTitle(songs);
                         }
                         break;
-					
+                    case "GS":
+                    {
+	                    player.FilterByGenre(songsGenre, Song.Genres.Pop);
+                    }
+	                    break;
                 }
 
 
@@ -105,6 +109,7 @@ namespace AudioPlayer
             for (int i = 0; i < songs.Length; i++)
             {
                 var song1 = new Song();
+                
                 song1.Title = "Song"+i;
                 song1.Duration = rand.Next(3000);
                 song1.Artist = new Artist("Nensi");
@@ -143,15 +148,18 @@ namespace AudioPlayer
 			song.Duration = rand.Next(3000);
             return song;
         }
-		static Song CreateSongGenre(string name)
+		static Song CreateSongGenre(string name, int num)
 		{
 			Random rand = new Random();
 			var song = new Song();
 			song.Artist=new Artist();
 			song.Title=name;
+			Song.Genres[] gentxt={Song.Genres.None,Song.Genres.Pop,Song.Genres.Rock,Song.Genres.Rap ,Song.Genres.Metall};
 			Song.Genres gen;
-			gen = Song.Genres.Pop;
+			gen =gentxt[num];
 			song.Genre=gen;
+			
+			
 			
 			song.Duration = rand.Next(3000);
 			return song;

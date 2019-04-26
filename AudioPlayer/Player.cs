@@ -172,6 +172,20 @@ namespace AudioPlayer
             }
 
         }
+        public void FilterByGenre(List<Song> songs, Song.Genres fiterGenre)
+        {
+	        var newsongs = new List<Song>();
+	        for (int i = 0; i < songs.Count; i++)
+	        {
+		        //Song.Genres genreSong = songs[i].Genre;
+		        if (fiterGenre == songs[i].Genre)
+		        {
+			        newsongs.Add(songs[i]);
+		        }
+	        }
+	        this.songs = newsongs;
+        }
+
 
 	}
 }
