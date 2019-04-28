@@ -11,7 +11,7 @@ namespace AudioPlayer
         
         public bool IsLock;
 		private bool _playing;
-        public Song[] Songs; //связь один со многими
+        public List<Song> Songs; //связь один со многими
 		public Song songone;
 		public bool Playing // {get; set;}
 		{

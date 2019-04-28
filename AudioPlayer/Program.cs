@@ -18,7 +18,7 @@ namespace AudioPlayer
             var player = new Player();
             var songs = CreateSongs(out min, out max, ref total);
             player.Songs = songs;
-			ArrayList  songs = new ArrayList();
+			
             Console.WriteLine($"{min},{max},{total}");
 			var song1 = CreateSong();
 			var song2 = CreateSong("Ogon'ki");
