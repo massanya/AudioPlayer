@@ -16,20 +16,18 @@ namespace AudioPlayer
         {
             int min, max, total=0;
             var player = new Player();
-            var songs = CreateSongs(out min, out max, ref total);
-            player.Songs = songs;
-			
-            Console.WriteLine($"{min},{max},{total}");
-			var song1 = CreateSong();
-			var song2 = CreateSong("Ogon'ki");
-			var song3 = CreateSong("Ogon'ki",new Artist("Lyapis"),1500);
-			player.songone=song3;
-            var album1=AddAlbum();
-			var album2=AddAlbum("Zora4ki",1999);
-			var album3=AddAlbum(Year:2001,Name:"Zozora4ki");
-			var artist1=AddArtist();
-			var artist2=AddArtist("Lyapis");
-			Console.WriteLine($"{album1.Name},{album1.Year},{album2.Name},{album2.Year},{album3.Name},{album3.Year}");
+            //var songs = CreateSongs(out min, out max, ref total);
+			List<Song> songs = new List<Song>();
+            for (int i = 0; i < 8; i++)
+            {
+                
+                var song = CreateSong("song " + (i + 1));
+                songs.Add(song);
+            }
+            player.Add(songs);
+			//player.SortByTitle(songs);
+            //player.Shuffle(songs);
+
 			while (true)
             {
                 switch (ReadLine())
@@ -46,7 +44,7 @@ namespace AudioPlayer
                         break;
                     case "p":
                         {
-                            player.Play();
+                            player.Play(true);
                         }
                         break;
                     case "l":
@@ -69,21 +67,17 @@ namespace AudioPlayer
                             player.Start();
                         }
                         break;
-					case "play1":
+					case "shuf":
                         {
-                            player.Add(song1);
+                            player.Shuffle(songs);
                         }
                         break;
-					case "play2":
+					case "sort":
                         {
-                            player.Add(song1,song2);
+                            player.SortByTitle(songs);
                         }
                         break;
-					case "playall":
-                        {
-                            player.Add(songs);
-                        }
-                        break;
+					
                 }
 
 
@@ -160,6 +154,7 @@ namespace AudioPlayer
 			return album;
 		}
 
+		
 
 
 
