@@ -50,16 +50,26 @@ namespace AudioPlayer
 
             }
         }
-        public void Play()
+        
+        List<Song> songs = new List<Song>();
+        public void Play(bool loop =false)
         {
-			Console.WriteLine(songone.Title+" "+songone.Artist.Name+" "+songone.Duration);
-
-			for (int i = 0; i < Songs.Length; i++)
+            int repeat;
+            repeat = loop == false ? 1 : 5;
+            for (int i = 0; i < repeat; i++)
             {
-                Console.WriteLine(Songs[i].Title+" "+Songs[i].Artist.Name+" "+Songs[i].Duration);
-                System.Threading.Thread.Sleep(Songs[i].Duration);
+	            
+	            if (songs[i].like == true)
+	            {
+		            Console.ForegroundColor = ConsoleColor.Green;
+	            }
+				else if (songs[i].like == false)
+	            {
+		            Console.ForegroundColor = ConsoleColor.Red;
+	            }
+	            Console.WriteLine(songs[i].Title+" Genre-"+songs[i].Genre);
+                System.Threading.Thread.Sleep(2000);
             }
-            
         }
 
        
@@ -107,13 +117,75 @@ namespace AudioPlayer
 			}
 			return Playing;
         }
-		public void Add(params Song[] Songs)
+		public void Add(List<Song> songs)
         {
-            for (int i = 0; i < Songs.Length; i++)
-			{
-				Console.WriteLine(Songs[i].Title+" "+Songs[i].Artist.Name+" "+Songs[i].Duration);
-                System.Threading.Thread.Sleep(Songs[i].Duration);
-			}
+            this.songs = songs;
         }
-    }
+
+        public void Shuffle(List<Song> songs)
+        {
+            List<Song> songsNew =new List<Song>();
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = i; j < songs.Count; j+=3)
+                {
+                    songsNew.Add(songs[j]);
+                }
+            }
+            this.songs = songsNew;
+        }
+
+        public void SortByTitle (List<Song> songs)
+        {
+            var songsTitle = new List<string>();
+            foreach (Song sng in songs)
+            {
+                string title = sng.Title;
+                songsTitle.Add(title);
+            }
+            songsTitle.Sort();
+            var sortedSongs = new List<Song>();
+            for (int i = 0; i < songsTitle.Count; i++)
+            {
+                foreach(Song sng in songs)
+                {
+                    if (songsTitle[i]==sng.Title)
+                    {
+                        sortedSongs.Add(sng);
+                    }
+                }
+            }
+            this.songs = sortedSongs;
+        }
+
+        public void WriteLyrics(Song song)
+        {
+            song.Title = song.Title.Length > 13 ? song.Title.Remove(13)+" ..." : song.Title;
+            Console.WriteLine(song.Title);
+            if (song.Lyrics!= null)
+            {
+                string[] massStringLyrics = song.Lyrics.Split(';');
+                for (int i = 0; i < massStringLyrics.Length; i++)
+                {
+                    Console.WriteLine(massStringLyrics[i]);
+                }
+            }
+
+        }
+        public void FilterByGenre(List<Song> songs, Song.Genres fiterGenre)
+        {
+	        var newsongs = new List<Song>();
+	        for (int i = 0; i < songs.Count; i++)
+	        {
+		        //Song.Genres genreSong = songs[i].Genre;
+		        if (fiterGenre == songs[i].Genre)
+		        {
+			        newsongs.Add(songs[i]);
+		        }
+	        }
+	        this.songs = newsongs;
+        }
+
+
+	}
 }

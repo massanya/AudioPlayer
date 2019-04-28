@@ -1,4 +1,6 @@
 ﻿using System;
+
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,19 +16,29 @@ namespace AudioPlayer
         {
             int min, max, total=0;
             var player = new Player();
-            var songs = CreateSongs(out min, out max, ref total);
-            player.Songs = songs;
-            Console.WriteLine($"{min},{max},{total}");
-			var song1 = CreateSong();
-			var song2 = CreateSong("Ogon'ki");
-			var song3 = CreateSong("Ogon'ki",new Artist("Lyapis"),1500);
-			player.songone=song3;
-            var album1=AddAlbum();
-			var album2=AddAlbum("Zora4ki",1999);
-			var album3=AddAlbum(Year:2001,Name:"Zozora4ki");
-			var artist1=AddArtist();
-			var artist2=AddArtist("Lyapis");
-			Console.WriteLine($"{album1.Name},{album1.Year},{album2.Name},{album2.Year},{album3.Name},{album3.Year}");
+            Random rand = new Random();
+            //var songs = CreateSongs(out min, out max, ref total);
+			
+			
+			List<Song> songs = new List<Song>();
+            for (int i = 0; i < 8; i++)
+            {
+                
+                var song = CreateSong($"song {i}" , Convert.ToBoolean(rand.Next(2)));
+                songs.Add(song);
+            }
+            player.Add(songs);
+
+            List<Song> songsGenre = new List<Song>();
+            for (int i = 0; i < 8; i++)
+            {
+	            
+	            var songG = CreateSongGenre($"song {i}", rand.Next(4));
+	            
+	            songsGenre.Add(songG);
+            }
+            player.Add(songsGenre);
+
 			while (true)
             {
                 switch (ReadLine())
@@ -43,7 +55,7 @@ namespace AudioPlayer
                         break;
                     case "p":
                         {
-                            player.Play();
+                            player.Play(true);
                         }
                         break;
                     case "l":
@@ -66,21 +78,21 @@ namespace AudioPlayer
                             player.Start();
                         }
                         break;
-					case "play1":
+					case "shuf":
                         {
-                            player.Add(song1);
+                            player.Shuffle(songs);
                         }
                         break;
-					case "play2":
+					case "sort":
                         {
-                            player.Add(song1,song2);
+                            player.SortByTitle(songs);
                         }
                         break;
-					case "playall":
-                        {
-                            player.Add(songs);
-                        }
-                        break;
+                    case "GS":
+                    {
+	                    player.FilterByGenre(songsGenre, Song.Genres.Pop);
+                    }
+	                    break;
                 }
 
 
@@ -97,6 +109,7 @@ namespace AudioPlayer
             for (int i = 0; i < songs.Length; i++)
             {
                 var song1 = new Song();
+                
                 song1.Title = "Song"+i;
                 song1.Duration = rand.Next(3000);
                 song1.Artist = new Artist("Nensi");
@@ -125,24 +138,32 @@ namespace AudioPlayer
 			song.Duration = rand.Next(3000);
             return song;
         }
-		static Song CreateSong(string name)
+		static Song CreateSong(string name, bool like)
         {
             Random rand = new Random();
             var song = new Song();
 			song.Artist=new Artist();
 			song.Title=name;
+			song.like=like;
 			song.Duration = rand.Next(3000);
             return song;
         }
-		static Song CreateSong(string name,Artist artist, int durat)
-        {
-            Random rand = new Random();
-            var song = new Song();
-			song.Artist=artist;
+		static Song CreateSongGenre(string name, int num)
+		{
+			Random rand = new Random();
+			var song = new Song();
+			song.Artist=new Artist();
 			song.Title=name;
-			song.Duration = durat;
-            return song;
-        }
+			Song.Genres[] gentxt={Song.Genres.None,Song.Genres.Pop,Song.Genres.Rock,Song.Genres.Rap ,Song.Genres.Metall};
+			Song.Genres gen;
+			gen =gentxt[num];
+			song.Genre=gen;
+			
+			
+			
+			song.Duration = rand.Next(3000);
+			return song;
+		}
 		static Artist AddArtist(string Name="Unknown Artist")
 		{
 			var artist=new Artist();
@@ -157,6 +178,7 @@ namespace AudioPlayer
 			return album;
 		}
 
+		
 
 
 
