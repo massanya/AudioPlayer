@@ -12,7 +12,7 @@ namespace AudioPlayer
 {
     class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             int min, max, total=0;
             var player = new Player();
@@ -33,12 +33,13 @@ namespace AudioPlayer
             for (int i = 0; i < 8; i++)
             {
 	            
-	            var songG = CreateSongGenre($"song {i}", rand.Next(4));
+	            var songG = CreateSongGenre($"song fdvjutv bhrykse {i}", rand.Next(4));
 	            
 	            songsGenre.Add(songG);
             }
             player.Add(songsGenre);
-
+			player.Add(songs.Shuffle());
+            player.Add(songs.SortByTitle());
 			while (true)
             {
                 switch (ReadLine())
@@ -78,16 +79,7 @@ namespace AudioPlayer
                             player.Start();
                         }
                         break;
-					case "shuf":
-                        {
-                            player.Shuffle(songs);
-                        }
-                        break;
-					case "sort":
-                        {
-                            player.SortByTitle(songs);
-                        }
-                        break;
+					
                     case "GS":
                     {
 	                    player.FilterByGenre(songsGenre, Song.Genres.Pop);
@@ -153,7 +145,7 @@ namespace AudioPlayer
 			Random rand = new Random();
 			var song = new Song();
 			song.Artist=new Artist();
-			song.Title=name;
+			song.Title=name.TrimString;
 			Song.Genres[] gentxt={Song.Genres.None,Song.Genres.Pop,Song.Genres.Rock,Song.Genres.Rap ,Song.Genres.Metall};
 			Song.Genres gen;
 			gen =gentxt[num];
