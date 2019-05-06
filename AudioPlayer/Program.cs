@@ -145,7 +145,7 @@ namespace AudioPlayer
 			Random rand = new Random();
 			var song = new Song();
 			song.Artist=new Artist();
-			song.Title=name.TrimString;
+			song.Title=name.TrimString();
 			Song.Genres[] gentxt={Song.Genres.None,Song.Genres.Pop,Song.Genres.Rock,Song.Genres.Rap ,Song.Genres.Metall};
 			Song.Genres gen;
 			gen =gentxt[num];
