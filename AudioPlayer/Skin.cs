@@ -21,7 +21,8 @@ namespace AudioPlayer
 
 		public override void Render(string str)
 		{
-			Console.WriteLine(str);
+			Console.ForegroundColor = ConsoleColor.White;
+			Console.WriteLine($"{str}");
 		}
 	}
 	public class ColorSkin : Skin

@@ -14,9 +14,10 @@ namespace AudioPlayer
         static void Main(string[] args)
         {
             int min, max, total=0;
-            var player = new Player();
+            Player player = new Player(new ClassicSkin());
             Random rand = new Random();
-			Console.WriteLine($"{Enum.GetValues(typeof(ConsoleColor)).GetValue(13)}");
+			
+			Console.WriteLine($"{0}");
             //var songs = CreateSongs(out min, out max, ref total);
 			
 			
@@ -38,7 +39,7 @@ namespace AudioPlayer
 	            songsGenre.Add(songG);
             }
             player.Add(songsGenre);
-
+			
 			while (true)
             {
                 switch (ReadLine())
@@ -91,6 +92,11 @@ namespace AudioPlayer
                     case "GS":
                     {
 	                    player.FilterByGenre(songsGenre, Song.Genres.Pop);
+                    }
+	                    break;
+					case "CHS":
+                    {
+	                    player.ChangeSkin();
                     }
 	                    break;
                 }
