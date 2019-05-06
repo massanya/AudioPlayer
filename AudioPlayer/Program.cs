@@ -1,5 +1,4 @@
 ﻿using System;
-
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +16,7 @@ namespace AudioPlayer
             int min, max, total=0;
             var player = new Player();
             Random rand = new Random();
+			Console.WriteLine($"{Enum.GetValues(typeof(ConsoleColor)).GetValue(13)}");
             //var songs = CreateSongs(out min, out max, ref total);
 			
 			

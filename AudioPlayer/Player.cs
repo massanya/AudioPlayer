@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
+
 
 namespace AudioPlayer
 {
@@ -13,6 +16,8 @@ namespace AudioPlayer
 		private bool _playing;
         public Song[] Songs; //связь один со многими
 		public Song songone;
+		
+		public Skin plskin; //почему-то не видит мой класс skin( не знаю что ему подключить...
 		public bool Playing // {get; set;}
 		{
 			get
