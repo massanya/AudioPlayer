@@ -37,6 +37,11 @@ namespace AudioPlayer
 	        like = false;
         }
 
-        
+        public void Deconstruct(out int duration, out string title, out Artist artist)
+        {
+            duration = Duration;
+            title = Title;
+            artist = Artist;
+        }
     }
 }

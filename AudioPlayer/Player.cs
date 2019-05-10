@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
+
 
 namespace AudioPlayer
 {
@@ -13,6 +16,9 @@ namespace AudioPlayer
 		private bool _playing;
         public Song[] Songs; //связь один со многими
 		public Song songone;
+		
+		
+		
 		public bool Playing // {get; set;}
 		{
 			get
@@ -118,10 +124,23 @@ namespace AudioPlayer
 			return Playing;
         }
 		public void Add(List<Song> songs)
+
         {
             this.songs = songs;
         }
-
+		public Skin plskin; 
+		public Player(Skin plskin)
+        {
+            this.plskin = plskin;
+            this.plskin.Clear();
+		}
+		public void ParametrSong(params Song[] songs)
+        {
+            foreach (Song item in songs)
+            {
+                plskin.Render(item.Title);
+            }
+        }
         public void Shuffle(List<Song> songs)
         {
             List<Song> songsNew =new List<Song>();
@@ -185,7 +204,25 @@ namespace AudioPlayer
 	        }
 	        this.songs = newsongs;
         }
-
+		public void ChangeSkin()
+        {
+            
+            Console.WriteLine("Choose skin. 1-classic, 2-green, 3-random");
+            switch (Console.ReadLine())
+            {
+                case "1":
+                default:
+                    plskin = new ClassicSkin();
+                    break;
+                case "2":
+                    plskin = new ColorSkin();
+                    break;
+                case "3":
+                    plskin = new RandomColorSkin();
+                    break;
+            }
+            
+        }
 
 	}
 }
