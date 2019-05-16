@@ -22,24 +22,17 @@ namespace AudioPlayer
 			
 			
 			List<Song> songs = new List<Song>();
-            for (int i = 0; i < 8; i++)
-            {
-                
-                var song = CreateSong($"song {i}" , Convert.ToBoolean(rand.Next(2)));
-                songs.Add(song);
-            }
-            player.Add(songs);
+            
+            string path = "D://Новая папка (2)";
+            Player.Load(path);
 
-            List<Song> songsGenre = new List<Song>();
-            for (int i = 0; i < 8; i++)
-            {
-	            
-	            var songG = CreateSongGenre($"song {i}", rand.Next(4));
-	            
-	            songsGenre.Add(songG);
-            }
-            player.Add(songsGenre);
-			
+            string newplaylist = "D://Новая папка (2)";
+
+            Player.SaveAsPlaylist(newplaylist);
+            Player.LoadPlaylist(newplaylist);
+            
+
+            
 			while (true)
             {
                 switch (ReadLine())

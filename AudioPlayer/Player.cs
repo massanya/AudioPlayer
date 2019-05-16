@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
+using System.Xml.Serialization;
+using TagLib;
+
 
 
 namespace AudioPlayer
@@ -211,7 +215,6 @@ namespace AudioPlayer
             switch (Console.ReadLine())
             {
                 case "1":
-                default:
                     plskin = new ClassicSkin();
                     break;
                 case "2":
@@ -223,6 +226,41 @@ namespace AudioPlayer
             }
             
         }
+		public void Load(string path)
+		{
+			var dirInfo = new DirectoryInfo(path);
+			var files = dirInfo.GetFiles("*.wav");
 
+			var Items = new List<Song>();
+			foreach (var item in files)
+			{
+				Song audio = new Song(item.FullName, ReadStyle.Average);
+
+				var artist = new Artist(audio.Tag.FirstPerformer);
+				var album = new Album(audio.Tag.Album, audio.Tag.Year);
+
+				Items.Add(new Song { Title = item.Name, Album = album, Artist = artist, Duration = audio.Properties.Duration.TotalMinutes, Path = item.FullName, Lyrics = audio.Tag.Lyrics }); 
+			}
+		}
+
+		public void SaveAsPlaylist(string path)
+		{
+			XmlSerializer formatter = new XmlSerializer(typeof(List<Song>));
+
+			using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+			{
+				formatter.Serialize(fs, Items);
+			}
+		}
+
+		public void LoadPlaylist(string path)
+		{
+			XmlSerializer formatter = new XmlSerializer(typeof(List<Song>));
+
+			using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+			{
+				Items = (List<Song>)formatter.Deserialize(fs);
+			}
+		}
 	}
 }
