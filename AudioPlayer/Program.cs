@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
-
+//using System.Media;
 
 namespace AudioPlayer
 {
@@ -18,9 +18,14 @@ namespace AudioPlayer
             
 			Player player = new Player(new ClassicSkin());
 			
-			player.Load();
-			player.SaveAsPlaylist("d://Музыка//TOPIC9//1.xml");
-            player.LoadPlaylist("d://Музыка//TOPIC9//1.xml");
+			
+			System.Media.SoundPlayer wavplayer=new System.Media.SoundPlayer("d://Музыка//TOPIC9//11 - Трек 11.wav");
+			wavplayer.Play();
+			List<Song>sng=player.Load();
+            player.Play(sng);
+
+			//player.SaveAsPlaylist("d://Музыка//TOPIC9//1.xml");
+            //player.LoadPlaylist("d://Музыка//TOPIC9//1.xml");
 
 			List<Song> songs = new List<Song>();
             for (int i = 0; i < 8; i++)

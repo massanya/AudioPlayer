@@ -63,8 +63,9 @@ namespace AudioPlayer
             min = Duration / 60;
             sec = Duration % 60;
             nameOfArtist = Artist.Name;
-            album = "Unk";
+            album = "alb";
             year =10;
         }
+		
     }
 }
