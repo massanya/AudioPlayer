@@ -11,6 +11,7 @@ namespace AudioPlayer
 	{
 		public abstract void Clear();
 		public abstract void Render(string str);
+        
 	}
 	public class ClassicSkin : Skin
 	{

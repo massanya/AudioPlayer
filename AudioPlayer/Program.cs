@@ -13,14 +13,15 @@ namespace AudioPlayer
     {
         static void Main(string[] args)
         {
-            int min, max, total=0;
-            Player player = new Player(new ClassicSkin());
-            Random rand = new Random();
+			int min, max, total=0;
+			Random rand = new Random();
+            
+			Player player = new Player(new ClassicSkin());
 			
-			Console.WriteLine($"{0}");
-            //var songs = CreateSongs(out min, out max, ref total);
-			
-			
+			player.Load();
+			player.SaveAsPlaylist("d://Музыка//TOPIC9//1.xml");
+            player.LoadPlaylist("d://Музыка//TOPIC9//1.xml");
+
 			List<Song> songs = new List<Song>();
             for (int i = 0; i < 8; i++)
             {
@@ -28,17 +29,9 @@ namespace AudioPlayer
                 var song = CreateSong($"song {i}" , Convert.ToBoolean(rand.Next(2)));
                 songs.Add(song);
             }
-            player.Add(songs);
+            
 
-            List<Song> songsGenre = new List<Song>();
-            for (int i = 0; i < 8; i++)
-            {
-	            
-	            var songG = CreateSongGenre($"song {i}", rand.Next(4));
-	            
-	            songsGenre.Add(songG);
-            }
-            player.Add(songsGenre);
+            
 			
 			while (true)
             {
@@ -56,7 +49,7 @@ namespace AudioPlayer
                         break;
                     case "p":
                         {
-                            player.Play(true);
+                            player.Play(songs,true);
                         }
                         break;
                     case "l":
@@ -91,7 +84,7 @@ namespace AudioPlayer
                         break;
                     case "GS":
                     {
-	                    player.FilterByGenre(songsGenre, Song.Genres.Pop);
+	                    player.FilterByGenre(songs, Song.Genres.Pop);
                     }
 	                    break;
 					case "CHS":
@@ -150,26 +143,11 @@ namespace AudioPlayer
             var song = new Song();
 			song.Artist=new Artist();
 			song.Title=name;
-			song.like=like;
+			
 			song.Duration = rand.Next(3000);
             return song;
         }
-		static Song CreateSongGenre(string name, int num)
-		{
-			Random rand = new Random();
-			var song = new Song();
-			song.Artist=new Artist();
-			song.Title=name;
-			Song.Genres[] gentxt={Song.Genres.None,Song.Genres.Pop,Song.Genres.Rock,Song.Genres.Rap ,Song.Genres.Metall};
-			Song.Genres gen;
-			gen =gentxt[num];
-			song.Genre=gen;
-			
-			
-			
-			song.Duration = rand.Next(3000);
-			return song;
-		}
+		
 		static Artist AddArtist(string Name="Unknown Artist")
 		{
 			var artist=new Artist();
@@ -178,7 +156,7 @@ namespace AudioPlayer
 		}
 		static Album AddAlbum(string Name="Unknown Album", int Year=0)
 		{
-			var album=new Album();
+			var album=new Album("Unknown Album",0);
 			album.Name=Name;
 			album.Year=Year;
 			return album;
