@@ -3,23 +3,53 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Media;
 using System.Threading.Tasks;
 using static System.Console;
+using System.Xml.Serialization;
+using System.IO;
+
+//using File=File.TagLib;
 
 
 namespace AudioPlayer
 {
-    class Player
+    class Player : IDisposable
     {
-        
-        public bool IsLock;
+        public List<Playlist> Playlists { get; set; } = new List<Playlist>();
+        public static List<Song> Songs { get; set; } = new List<Song>();
+        private static Skin Skin { get; set; }
+        public static bool Loop { get; set; }
+        public bool IsLock { get; set; }
+         private SoundPlayer soundPlayer;
+        private bool disposed = false;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    Skin = null;
+                    Clear(); 
+                    
+                }
+                soundPlayer?.Dispose();
+                disposed = true;
+            }
+        }
+		~Player()
+        {
+            Dispose(false);
+        }
 		private bool _playing;
-        public Song[] Songs; //связь один со многими
-		public Song songone;
-		
-		
-		
-		public bool Playing // {get; set;}
+        public bool Playing // {get; set;}
 		{
 			get
 			{
@@ -58,24 +88,27 @@ namespace AudioPlayer
         }
         
         List<Song> songs = new List<Song>();
-        public void Play(bool loop =false)
+        public void Play(List<Song> songs, bool loop)
         {
-            int repeat;
-            repeat = loop == false ? 1 : 5;
-            for (int i = 0; i < repeat; i++)
+            foreach (Song song in songs)
             {
-	            
-	            if (songs[i].like == true)
-	            {
-		            Console.ForegroundColor = ConsoleColor.Green;
-	            }
-				else if (songs[i].like == false)
-	            {
-		            Console.ForegroundColor = ConsoleColor.Red;
-	            }
-	            Console.WriteLine(songs[i].Title+" Genre-"+songs[i].Genre);
-                System.Threading.Thread.Sleep(2000);
+                if (loop == true)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        song.Play = true;
+                        Player.WriteSongsList(songs);
+                    }
+                }
+                else
+                {
+                    song.Play = true;
+                    Player.WriteSongsList(songs);
+                    song.Play = false;
+                    Console.ReadLine();
+                }
             }
+
         }
 
        
@@ -123,11 +156,43 @@ namespace AudioPlayer
 			}
 			return Playing;
         }
-		public void Add(List<Song> songs)
-
+		public static void WriteSongData(Song song, ConsoleColor color)
         {
-            this.songs = songs;
+            
+            var (title, minutes, seconds, artistName, album, year) = song;
+            Skin.Render($"Title - {title}");
+            Skin.Render($"Duration - {minutes}.{seconds}");
+            Skin.Render($"Artist - {artistName}");
+            Skin.Render($"Album - {album}");
+            Skin.Render($"Year - {year}");
+            Console.WriteLine();
         }
+		public static void WriteSongsList(List<Song> songs)
+        {
+			foreach (Song song in songs)
+            {
+				if (song.Play == true)
+                {     
+					WriteSongData(song, ConsoleColor.DarkRed);
+                }
+				else
+                {
+					if (song.Liked.HasValue == true)
+                    {
+                        if (song.Liked == true)
+                        {
+                            WriteSongData(song, ConsoleColor.Red);
+                        }
+                        else
+                        {
+                            WriteSongData(song, ConsoleColor.Green);
+                        }
+                    }
+                    else WriteSongData(song, ConsoleColor.White);
+                }
+			}
+		}
+		
 		public Skin plskin; 
 		public Player(Skin plskin)
         {
@@ -197,7 +262,8 @@ namespace AudioPlayer
 	        for (int i = 0; i < songs.Count; i++)
 	        {
 		        //Song.Genres genreSong = songs[i].Genre;
-		        if (fiterGenre == songs[i].Genre)
+
+		        //if (fiterGenre == songs[i].Genre)
 		        {
 			        newsongs.Add(songs[i]);
 		        }
@@ -223,6 +289,71 @@ namespace AudioPlayer
             }
             
         }
+		public void Clear()
+        {
+            songs.Clear();
+        }
+		public List<Song> Load()
+        {
+            List<FileInfo> fileInfos = new List<FileInfo>();
+            List<Song> songs = new List<Song>();
+            string path = "d:\\Музыка\\TOPIC9";
+            DirectoryInfo directoryInfo = new DirectoryInfo(path);
+            foreach (var file in directoryInfo.GetFiles("*.wav"))
+            {
+                fileInfos.Add(file);
+				
+            }
+			foreach (var song in Directory.GetFiles(path))
+            {
+                //songs.Add(new Song("son",2,20,"art","alb",1998) { Path = path });
+				songs.Add(new Song() { Title = path});
+            
+            }
+			return songs;
+            Console.WriteLine($"{songs}");
+            //foreach (var file in fileInfos)
+            //{
 
+              //  var audio = File.Create(file.FullName);
+				//Console.WriteLine($"{audio}");
+                //songs.Add(new Song(){Album=new Album(audio.Name,(int)audio.Length)});
+				//songs.Add(new Song() { Album = new Album(audio?.Tag.Album, (int)audio.Tag?.Year), Artist = new Artist(audio.Tag?.FirstPerformer), Duration = (int)audio.Properties.Duration.TotalSeconds, Genre = audio.Tag?.FirstGenre, Lyrics = audio.Tag?.Lyrics, Title = audio.Tag?.Title, Path = audio.Name });
+            //}
+
+        }
+		public void Play(List<Song> songs)
+		{
+
+			foreach (var file in songs)
+            {
+                
+                
+                soundPlayer = new SoundPlayer(file.Title+".wav");
+                soundPlayer.PlaySync();
+            }
+
+
+
+		}
+		public void SaveAsPlaylist(string path)
+        {
+            XmlSerializer xs = new XmlSerializer(typeof(List<Song>));
+
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            {
+                xs.Serialize(fs, songs);
+            }
+        }
+
+        public void LoadPlaylist(string path)
+        {
+            XmlSerializer xs = new XmlSerializer(typeof(List<Song>));
+
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            {
+                songs = (List<Song>)xs.Deserialize(fs);
+            }
+        }
 	}
 }

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace AudioPlayer
 {
-    
-	class Song
+    [Serializable]
+    public class Song
     {
 	    
-	    public enum Genres
+	    
+        public enum Genres
 	    {
 		    None = 0,       //0000
 		    Pop,        //0001
@@ -18,30 +19,53 @@ namespace AudioPlayer
 		    Rap ,		//0100
 		    Metall	//1000
 	    }
-	    public int Duration;
-        public string Title;
-        public string Path;
-        public string Lyrics;
-        //public string Genre;
-        public Artist Artist;
-        public Album Album;
-        public Genres Genre;
-		public bool? like=null;
-        public void Like()
+	    public int Duration { get; set; }
+        public string Title { get; set; }
+        public string Path { get; set; }
+        public string Lyrics { get; set; }
+        public string Genre;
+        public Artist Artist { get; set; }
+        public Album Album { get; set; }
+        
+		
+        public bool? Liked=null;
+        private bool _play;
+        public bool Play
         {
-	        like = true;
+            get
+            {
+                return _play;
+            }
+            set
+            {
+                _play = value;
+            }
+        }
+        
+
+        private Playlist[] Playlist;
+
+        
+        public void Like(Song song)
+        {
+            song.Liked=true;
         }
 
-        public void Dislike()
+       
+        public static void Dislike(Song song)
         {
-	        like = false;
+           song.Liked = false;
         }
 
-        public void Deconstruct(out int duration, out string title, out Artist artist)
+        public void Deconstruct(out string title, out int min, out int sec, out string nameOfArtist,out string album, out int year)
         {
-            duration = Duration;
             title = Title;
-            artist = Artist;
+            min = Duration / 60;
+            sec = Duration % 60;
+            nameOfArtist = Artist.Name;
+            album = "alb";
+            year =10;
         }
+		
     }
 }
