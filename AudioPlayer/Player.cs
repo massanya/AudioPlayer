@@ -198,6 +198,7 @@ namespace AudioPlayer
         {
             this.plskin = plskin;
             this.plskin.Clear();
+			soundPlayer = new SoundPlayer();
 		}
 		public void ParametrSong(params Song[] songs)
         {
@@ -329,7 +330,7 @@ namespace AudioPlayer
             {
                 
                 
-                soundPlayer = new SoundPlayer(file.Title+".wav");
+                soundPlayer.SoundLocation =(file.Path);
                 soundPlayer.PlaySync();
             }
 

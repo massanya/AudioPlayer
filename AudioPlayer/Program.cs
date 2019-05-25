@@ -19,14 +19,12 @@ namespace AudioPlayer
 			Player player = new Player(new ClassicSkin());
 			
 			
-			System.Media.SoundPlayer wavplayer=new System.Media.SoundPlayer("d://Музыка//TOPIC9//11 - Трек 11.wav");
-			wavplayer.Play();
+			//System.Media.SoundPlayer wavplayer=new System.Media.SoundPlayer("d://Музыка//TOPIC9//11 - Трек 11.wav");
+			//wavplayer.Play();
 			List<Song>sng=player.Load();
             player.Play(sng);
-
-			//player.SaveAsPlaylist("d://Музыка//TOPIC9//1.xml");
-            //player.LoadPlaylist("d://Музыка//TOPIC9//1.xml");
-
+			player.Dispose();
+			
 			List<Song> songs = new List<Song>();
             for (int i = 0; i < 8; i++)
             {
